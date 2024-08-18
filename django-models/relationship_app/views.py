@@ -24,10 +24,12 @@ def register_view(request):
     form = UserCreationForm(request.POST)
     if form.is_valid():
       form.save()
+
+      # Redirect to login page or other success view after registration
       return redirect('login')
   else:
     form = UserCreationForm()
-  return render(request, 'registration/register.html', {'form': form})
+  return render(request, 'relationship_app/register.html', {'form': form})
 
 def login_view(request):
   if request.method == 'POST':
@@ -41,7 +43,7 @@ def login_view(request):
       return redirect('list_books')  # Or another protected view
     else:
       # Handle invalid login attempt (e.g., display error message)
-        return render(request, 'registration/login.html')  # Or custom login template
+        return render(request, 'relationship_app/login.html')  # Or custom login template
 
 def logout_view(request):
   logout(request)
