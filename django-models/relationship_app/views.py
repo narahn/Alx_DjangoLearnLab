@@ -72,3 +72,19 @@ def is_member(user):
 Admin_view = user_passes_test(is_admin)(Admin)
 librarian_view = user_passes_test(is_librarian)(librarian_view)
 member_view = user_passes_test(is_member)(member_view)
+def admin_view(request):
+    # Only accessible to users with the 'Admin' role
+    return render(request, 'admin_view.html')
+
+def librarian_view(request):
+    # Only accessible to users with the 'Librarian' role
+    return render(request, 'librarian_view.html')
+
+def member_view(request):
+    # Only accessible to users with the 'Member' role
+    return render(request, 'member_view.html')
+
+def is_admin(user):
+    return user.userprofile.role == 'Admin'
+
+admin_view = user_passes_test(is_admin)(admin_view)
