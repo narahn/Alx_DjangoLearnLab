@@ -4,6 +4,8 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import user_passes_test
+from rest_framework.permissions import BasePermission
+
 
 
 
@@ -68,6 +70,17 @@ def is_librarian(user):
 
 def is_member(user):
     return user.userprofile.role == 'Member'
+
+
+
+
+class IsAdminUser(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.userprofile.role == 'Admin'
+
+
+
+
 
 admin_view = user_passes_test(is_admin)(Admin_view)
 librarian_view = user_passes_test(is_librarian)(librarian_view)
